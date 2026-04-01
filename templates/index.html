@@ -1,0 +1,70 @@
+{% extends "base.html" %}
+
+{% block title %}Home — Lost & Found Portal{% endblock %}
+
+{% block body_class %}page-home{% endblock %}
+
+{% block main_class %}page-home-main{% endblock %}
+
+{% block content %}
+<!--
+  Full-viewport hero: background image from static/images/ (replace hero.jpg with your own).
+  Dark overlay keeps headline readable. url_for works for deployed paths.
+-->
+<section class="hero" aria-labelledby="hero-title">
+  <div
+    class="hero__bg"
+    style="background-image: url('{{ url_for('static', filename='images/hero.jpg') }}');"
+    role="img"
+    aria-label="Atmospheric background suggesting travel and belongings"
+  ></div>
+  <div class="hero__overlay" aria-hidden="true"></div>
+
+  <div class="hero__inner">
+    <div class="hero__content glass-panel glass-panel--hero">
+      <h1 id="hero-title" class="hero__title">Lost & Found Portal</h1>
+      <p class="hero__subtitle">Find your lost items easily and quickly</p>
+
+      <div class="hero__actions">
+        <a class="btn-hero" href="{{ url_for('report_lost') }}">
+          <svg class="btn-hero__icon" width="20" height="20" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+            <path d="M12 5v14M5 12h14" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"/>
+          </svg>
+          Report Lost Item
+        </a>
+        <a class="btn-hero" href="{{ url_for('report_found') }}">
+          <svg class="btn-hero__icon" width="20" height="20" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+            <path d="M9 11l3 3L22 4" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+          Report Found Item
+        </a>
+        <a class="btn-hero btn-hero--accent" href="{{ url_for('view_matches') }}">
+          <svg class="btn-hero__icon" width="20" height="20" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+            <circle cx="11" cy="11" r="7" stroke="currentColor" stroke-width="2"/>
+            <path d="M21 21l-4-4" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+          </svg>
+          Find Matches
+        </a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Secondary glass strip: reinforces “product” feel without cluttering the hero -->
+<section class="home-strip" aria-label="Highlights">
+  <div class="home-strip__inner">
+    <article class="glass-panel home-card">
+      <h2 class="home-card__title">Smart matching</h2>
+      <p class="home-card__text">Scores and ranks possible pairs by name, location, and date.</p>
+    </article>
+    <article class="glass-panel home-card">
+      <h2 class="home-card__title">Photos &amp; contacts</h2>
+      <p class="home-card__text">Upload images and share contact details to connect faster.</p>
+    </article>
+    <article class="glass-panel home-card">
+      <h2 class="home-card__title">Built for growth</h2>
+      <p class="home-card__text">Ready to deploy to the cloud and extend with auth or email.</p>
+    </article>
+  </div>
+</section>
+{% endblock %}

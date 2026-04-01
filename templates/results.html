@@ -1,0 +1,101 @@
+{% extends "base.html" %}
+
+{% block title %}Results — Lost & Found Portal{% endblock %}
+
+{% block main_class %}wrap--wide{% endblock %}
+
+{% block content %}
+<div class="page-head">
+  <h1>Match results</h1>
+  <p class="lead">Ranked by smart match score (0–100%). Name and location use case-insensitive and partial matching; dates add extra confidence.</p>
+</div>
+
+{% if matches %}
+<div class="match-grid">
+  {% for m in matches %}
+  <article class="match-pair">
+    <div class="match-pair__badge-row">
+      <div class="match-score-block">
+        <div class="match-score-ring" style="--pct: {{ m.score }};">
+          <span class="match-score-ring__value">{{ m.score }}%</span>
+        </div>
+        <div class="match-score-block__meta">
+          {% if m.match_type == 'Strong Match' %}
+          <span class="match-badge match-badge--strong">{{ m.match_type }}</span>
+          {% else %}
+          <span class="match-badge match-badge--possible">{{ m.match_type }}</span>
+          {% endif %}
+          {% if m.days_apart is not none %}
+          <span class="match-meta">{{ m.days_apart }} day{% if m.days_apart != 1 %}s{% endif %} apart</span>
+          {% endif %}
+        </div>
+      </div>
+    </div>
+    <div class="match-pair__body">
+    <div class="col lost">
+      <h3>Lost</h3>
+      {% if m.lost.image %}
+      <div class="item-photo">
+        <img src="{{ url_for('static', filename='uploads/' + m.lost.image) }}" alt="Photo of lost item" loading="lazy" width="320" height="200">
+      </div>
+      {% else %}
+      <p class="item-photo-placeholder">No photo</p>
+      {% endif %}
+      <div class="mini-card lost-panel">
+        <dl>
+          <dt>Item name</dt>
+          <dd><strong>{{ m.lost.name }}</strong></dd>
+          <dt>Location</dt>
+          <dd>{{ m.lost.location }}</dd>
+          <dt>Date</dt>
+          <dd>{{ m.lost.date }}</dd>
+          <dt>Description</dt>
+          <dd>{{ m.lost.description or '—' }}</dd>
+        </dl>
+        <div class="contact-box">
+          <div class="contact-box__title">Contact (lost)</div>
+          <p class="contact-line"><span class="contact-label">Name</span> {{ m.lost.contact_name or '—' }}</p>
+          <p class="contact-line"><span class="contact-label">Phone</span> {% if m.lost.contact_phone %}<a href="tel:{{ m.lost.contact_phone }}">{{ m.lost.contact_phone }}</a>{% else %}—{% endif %}</p>
+          <p class="contact-line"><span class="contact-label">Email</span> {% if m.lost.contact_email %}<a href="mailto:{{ m.lost.contact_email }}">{{ m.lost.contact_email }}</a>{% else %}—{% endif %}</p>
+        </div>
+      </div>
+    </div>
+    <div class="arrow" aria-hidden="true">↔</div>
+    <div class="col found">
+      <h3>Found</h3>
+      {% if m.found.image %}
+      <div class="item-photo">
+        <img src="{{ url_for('static', filename='uploads/' + m.found.image) }}" alt="Photo of found item" loading="lazy" width="320" height="200">
+      </div>
+      {% else %}
+      <p class="item-photo-placeholder">No photo</p>
+      {% endif %}
+      <div class="mini-card found-panel">
+        <dl>
+          <dt>Item name</dt>
+          <dd><strong>{{ m.found.name }}</strong></dd>
+          <dt>Location</dt>
+          <dd>{{ m.found.location }}</dd>
+          <dt>Date</dt>
+          <dd>{{ m.found.date }}</dd>
+          <dt>Description</dt>
+          <dd>{{ m.found.description or '—' }}</dd>
+        </dl>
+        <div class="contact-box contact-box--found">
+          <div class="contact-box__title">Contact (found)</div>
+          <p class="contact-line"><span class="contact-label">Name</span> {{ m.found.contact_name or '—' }}</p>
+          <p class="contact-line"><span class="contact-label">Phone</span> {% if m.found.contact_phone %}<a href="tel:{{ m.found.contact_phone }}">{{ m.found.contact_phone }}</a>{% else %}—{% endif %}</p>
+          <p class="contact-line"><span class="contact-label">Email</span> {% if m.found.contact_email %}<a href="mailto:{{ m.found.contact_email }}">{{ m.found.contact_email }}</a>{% else %}—{% endif %}</p>
+        </div>
+      </div>
+    </div>
+    </div>
+  </article>
+  {% endfor %}
+</div>
+{% else %}
+<div class="card empty-state">
+  <p>No matches yet. Add <a href="{{ url_for('report_lost') }}">lost</a> and <a href="{{ url_for('report_found') }}">found</a> items with overlapping names and locations to see scored pairs here.</p>
+</div>
+{% endif %}
+{% endblock %}

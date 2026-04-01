@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>{% block title %}Lost & Found Portal{% endblock %}</title>
+  <!-- Styles linked via Flask so paths work in dev and production -->
+  <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body class="{% block body_class %}{% endblock %}">
+  <!-- Glass navigation: stays readable on dark gradient backgrounds -->
+  <header class="site-header">
+    <div class="inner">
+      <h1 class="site-title">
+        <a href="{{ url_for('index') }}">
+          <span class="site-title__icon" aria-hidden="true">
+            <svg width="28" height="28" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <path d="M12 2L4 6v6c0 5 3.5 9.5 8 11 4.5-1.5 8-6 8-11V6l-8-4z" stroke="currentColor" stroke-width="1.75" stroke-linejoin="round"/>
+              <path d="M12 8v4l2 2" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
+            </svg>
+          </span>
+          Lost & Found<span class="badge">Smart</span>
+        </a>
+      </h1>
+      <nav aria-label="Main">
+        <ul>
+          <li>
+            <a href="{{ url_for('report_lost') }}">
+              <svg class="nav-icon" width="18" height="18" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M12 5v14M5 12h14" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
+              Report Lost
+            </a>
+          </li>
+          <li>
+            <a href="{{ url_for('report_found') }}">
+              <svg class="nav-icon" width="18" height="18" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M9 11l3 3L22 4" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+              Report Found
+            </a>
+          </li>
+          <li>
+            <a href="{{ url_for('view_matches') }}">
+              <svg class="nav-icon" width="18" height="18" viewBox="0 0 24 24" fill="none" aria-hidden="true"><circle cx="11" cy="11" r="7" stroke="currentColor" stroke-width="2"/><path d="M21 21l-4-4" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
+              Results
+            </a>
+          </li>
+        </ul>
+      </nav>
+    </div>
+  </header>
+
+  <main class="wrap {% block main_class %}{% endblock %}">
+    {% block content %}{% endblock %}
+    <footer class="site-footer">
+      <p>Lost & Found Smart Portal — report items and discover possible matches.</p>
+    </footer>
+  </main>
+</body>
+</html>

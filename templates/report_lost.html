@@ -1,0 +1,59 @@
+{% extends "base.html" %}
+
+{% block title %}Report Lost Item — Lost & Found Portal{% endblock %}
+
+{% block content %}
+<div class="page-head">
+  <h1>Report Lost Item</h1>
+  <p class="lead">Describe what you lost, add optional photo and contact details so finders can reach you.</p>
+</div>
+
+{% if message %}
+<p class="flash" role="status">{{ message }}</p>
+{% endif %}
+
+<form class="card form-card" method="post" action="{{ url_for('report_lost') }}" enctype="multipart/form-data">
+  <div class="form-group">
+    <label for="name">Item name</label>
+    <input class="input-field" type="text" id="name" name="name" required maxlength="200" placeholder="e.g. Blue water bottle" value="{{ name or '' }}">
+  </div>
+  <div class="form-group">
+    <label for="location">Location</label>
+    <input class="input-field" type="text" id="location" name="location" required maxlength="200" placeholder="e.g. Campus library, second floor" value="{{ location or '' }}">
+    <p class="form-hint">Plain text for now; you can add map pins later using the same field.</p>
+  </div>
+  <div class="form-group">
+    <label for="date">Date</label>
+    <input class="input-field" type="date" id="date" name="date" required value="{{ date or '' }}">
+  </div>
+  <div class="form-group">
+    <label for="description">Description</label>
+    <textarea class="input-field" id="description" name="description" maxlength="2000" placeholder="Color, brand, distinguishing marks…">{{ description or '' }}</textarea>
+  </div>
+
+  <div class="form-section-title">Photo (optional)</div>
+  <div class="form-group">
+    <label for="image">Upload image</label>
+    <input class="input-file" type="file" id="image" name="image" accept="image/png,image/jpeg,image/gif,image/webp">
+    <p class="form-hint">PNG, JPG, GIF, or WebP — max 5 MB.</p>
+  </div>
+
+  <div class="form-section-title">Your contact (optional)</div>
+  <div class="form-group">
+    <label for="contact_name">Name</label>
+    <input class="input-field" type="text" id="contact_name" name="contact_name" maxlength="120" placeholder="Your name" value="{{ contact_name or '' }}">
+  </div>
+  <div class="form-group">
+    <label for="contact_phone">Phone</label>
+    <input class="input-field" type="text" id="contact_phone" name="contact_phone" maxlength="40" placeholder="Phone number" value="{{ contact_phone or '' }}">
+  </div>
+  <div class="form-group">
+    <label for="contact_email">Email</label>
+    <input class="input-field" type="email" id="contact_email" name="contact_email" maxlength="120" placeholder="email@example.com" value="{{ contact_email or '' }}">
+  </div>
+
+  <div class="form-actions">
+    <button type="submit" class="btn">Submit report</button>
+  </div>
+</form>
+{% endblock %}
